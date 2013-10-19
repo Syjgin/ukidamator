@@ -5,9 +5,8 @@
 
 int main(int argc, char *argv[])
 {
-    QString localeName = QLocale::system().name();
     QTranslator translator(0);
-    translator.load(QString("ukidamator_") + localeName, "../ukidamator");
+    translator.load("ukidamator_ru_RU");
     QApplication a(argc, argv);
     a.installTranslator(&translator);
     ProgramWindow w;

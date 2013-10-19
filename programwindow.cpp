@@ -68,6 +68,7 @@ void ProgramWindow::on_copyButton_clicked()
 
 void ProgramWindow::on_ukidamateButton_clicked()
 {
+    int possibility = ui->chanceSlider->value();
     QString textToChange = ui->textEdit->toPlainText();
     if(!textToChange.isEmpty() && textToChange.length() > 3)
     {
@@ -78,7 +79,9 @@ void ProgramWindow::on_ukidamateButton_clicked()
             mode += Converter::KatakanaMode;
         if(mode != Converter::Nothing)
         {
-            QString result = _converter->Convert(textToChange, (Converter::ConvertMode)mode);
+            _converter->SetConvertMode((Converter::ConvertMode)mode);
+            _converter->SetPossibility(possibility);
+            QString result = _converter->Convert(textToChange);
             ui->textEdit->setText(result);
         }
     }

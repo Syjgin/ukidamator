@@ -3,6 +3,8 @@
 Converter::Converter(QObject *parent) :
     QObject(parent)
 {
+    _currentConvertMode = Nothing;
+    _currentPossibility = 10;
     hiragana_replacements[QString::fromUtf8("а")] = QString::fromUtf8("あ");
         hiragana_replacements[QString::fromUtf8("и")] = QString::fromUtf8("い");
         hiragana_replacements[QString::fromUtf8("й")] = QString::fromUtf8("い");
@@ -157,7 +159,6 @@ Converter::Converter(QObject *parent) :
         hiragana_replacements[QString::fromUtf8("рё")] = QString::fromUtf8("りょ");
 
         hiragana_replacements[QString::fromUtf8("ва")] = QString::fromUtf8("わ");
-        hiragana_replacements[QString::fromUtf8("во")] = QString::fromUtf8("を");
         hiragana_replacements[QString::fromUtf8("н")] = QString::fromUtf8("ん");
 
 
@@ -299,7 +300,6 @@ Converter::Converter(QObject *parent) :
         hiragana_replacements[QString::fromUtf8("ryo")] = QString::fromUtf8("りょ");
 
         hiragana_replacements[QString::fromUtf8("wa")] = QString::fromUtf8("わ");
-        hiragana_replacements[QString::fromUtf8("wo")] = QString::fromUtf8("を");
         hiragana_replacements[QString::fromUtf8("n")] = QString::fromUtf8("ん");
 
 
@@ -458,7 +458,6 @@ Converter::Converter(QObject *parent) :
         katakana_replacements[QString::fromUtf8("рё")] = QString::fromUtf8("リョ");
 
         katakana_replacements[QString::fromUtf8("ва")] = QString::fromUtf8("ワ");
-        katakana_replacements[QString::fromUtf8("во")] = QString::fromUtf8("ヲ");
         katakana_replacements[QString::fromUtf8("н")] = QString::fromUtf8("ン");
 
 
@@ -598,17 +597,16 @@ Converter::Converter(QObject *parent) :
         katakana_replacements[QString::fromUtf8("ryo")] = QString::fromUtf8("リョ");
 
         katakana_replacements[QString::fromUtf8("wa")] = QString::fromUtf8("ワ");
-        katakana_replacements[QString::fromUtf8("wo")] = QString::fromUtf8("ヲ");
         katakana_replacements[QString::fromUtf8("n")] = QString::fromUtf8("ン");}
 
-QString Converter::Convert(const QString source, ConvertMode mode)
+QString Converter::Convert(const QString source)
 {
     QString result;
     int currentIndex = 0;
     for(int i=0; i < source.length()-3; i++)
     {
         int amount = 0;
-        QString converted = ConvertTrigramm(source[i], source[i+1], source[i+2], amount, mode);
+        QString converted = ConvertTrigramm(source[i], source[i+1], source[i+2], amount);
         if(converted != "")
         {
             result+=converted;
@@ -618,10 +616,6 @@ QString Converter::Convert(const QString source, ConvertMode mode)
         else
         {
             result+=source[i];
-            result+=source[i+1];
-            result+=source[i+2];
-            i+=2;
-            currentIndex+=2;
         }
         currentIndex++;
     }
@@ -629,7 +623,7 @@ QString Converter::Convert(const QString source, ConvertMode mode)
     if(dist == 3)
     {
         int unneeded = 0;
-        QString ps = ConvertTrigramm(source[currentIndex], source[currentIndex+1], source[currentIndex+2], unneeded, mode);
+        QString ps = ConvertTrigramm(source[currentIndex], source[currentIndex+1], source[currentIndex+2], unneeded);
         if(ps !="")
             result+=ps;
         else
@@ -643,7 +637,7 @@ QString Converter::Convert(const QString source, ConvertMode mode)
     {
         QString pattern = source[currentIndex];
         pattern +=  source[currentIndex+1];
-        QString ps = ConvertPattern(pattern, mode);
+        QString ps = ConvertPattern(pattern);
         if(ps !="")
             result+=ps;
         else
@@ -655,7 +649,7 @@ QString Converter::Convert(const QString source, ConvertMode mode)
     if(dist == 1)
     {
         QString pattern = source[currentIndex];
-        QString ps = ConvertPattern(pattern, mode);
+        QString ps = ConvertPattern(pattern);
         if(ps !="")
             result+=ps;
         else
@@ -666,7 +660,17 @@ QString Converter::Convert(const QString source, ConvertMode mode)
     return result;
 }
 
-QString Converter::ConvertTrigramm(QChar one, QChar two, QChar three, int &amount, ConvertMode mode)
+void Converter::SetConvertMode(Converter::ConvertMode mode)
+{
+    _currentConvertMode = mode;
+}
+
+void Converter::SetPossibility(int possibility)
+{
+    _currentPossibility = possibility;
+}
+
+QString Converter::ConvertTrigramm(QChar one, QChar two, QChar three, int &amount)
 {
     QString result = "";
     QString trigramm = "";
@@ -674,7 +678,7 @@ QString Converter::ConvertTrigramm(QChar one, QChar two, QChar three, int &amoun
     trigramm += two.toLower();
     trigramm += three.toLower();
 
-    QString convertedTrigramm = ConvertPattern(trigramm, mode);
+    QString convertedTrigramm = ConvertPattern(trigramm);
     if(convertedTrigramm != "")
     {
         result = convertedTrigramm;
@@ -686,7 +690,7 @@ QString Converter::ConvertTrigramm(QChar one, QChar two, QChar three, int &amoun
     dugramm += one.toLower();
     dugramm += two.toLower();
 
-    QString convertedDugramm = ConvertPattern(dugramm, mode);
+    QString convertedDugramm = ConvertPattern(dugramm);
     if(convertedDugramm != "")
     {
         result = convertedDugramm;
@@ -695,7 +699,7 @@ QString Converter::ConvertTrigramm(QChar one, QChar two, QChar three, int &amoun
     }
 
     QString currentSymbol = one.toLower();
-    QString convertedSymbol = ConvertPattern(currentSymbol, mode);
+    QString convertedSymbol = ConvertPattern(currentSymbol);
     if(convertedSymbol != "")
     {
         result = convertedSymbol;
@@ -703,9 +707,9 @@ QString Converter::ConvertTrigramm(QChar one, QChar two, QChar three, int &amoun
     return result;
 }
 
-QString Converter::ConvertPattern(QString pattern, ConvertMode mode)
+QString Converter::ConvertPattern(QString pattern)
 {
-    if(mode == (HiraganaMode|KatakanaMode))
+    if(_currentConvertMode == (HiraganaMode|KatakanaMode))
     {
         bool rand = qrand()%2;
         if(rand)
@@ -714,12 +718,12 @@ QString Converter::ConvertPattern(QString pattern, ConvertMode mode)
         }
         return FindHiraganaByPattern(pattern);
     }
-    if(mode == HiraganaMode)
+    if(_currentConvertMode == HiraganaMode)
     {
         return FindHiraganaByPattern(pattern);
     }
 
-    if(mode == KatakanaMode)
+    if(_currentConvertMode == KatakanaMode)
     {
         return FindKatakanaByPattern(pattern);
     }
@@ -728,8 +732,8 @@ QString Converter::ConvertPattern(QString pattern, ConvertMode mode)
 
 QString Converter::FindHiraganaByPattern(QString pattern)
 {
-    bool rand = qrand()%2;
-    if(!rand)
+    int rand = qrand()%100;
+    if(rand >= _currentPossibility)
         return "";
     QMap<QString, QString>::const_iterator i = hiragana_replacements.constBegin();
     while (i != hiragana_replacements.constEnd()) {
@@ -742,8 +746,8 @@ QString Converter::FindHiraganaByPattern(QString pattern)
 
 QString Converter::FindKatakanaByPattern(QString pattern)
 {
-    bool rand = qrand()%2;
-    if(!rand)
+    int rand = qrand()%100;
+    if(rand >= _currentPossibility)
         return "";
     QMap<QString, QString>::const_iterator i = katakana_replacements.constBegin();
     while (i != katakana_replacements.constEnd()) {
