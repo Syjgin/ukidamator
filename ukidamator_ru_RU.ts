@@ -5,8 +5,8 @@
     <name>ProgramWindow</name>
     <message>
         <location filename="programwindow.ui" line="20"/>
-        <source>Ukidama</source>
-        <translation>Снежификатор</translation>
+        <source>Ukidamator</source>
+        <translation>Юкидаматор</translation>
     </message>
     <message>
         <location filename="programwindow.ui" line="44"/>
