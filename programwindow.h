@@ -28,6 +28,8 @@ private slots:
 
     void on_ukidamateButton_clicked();
 
+    void on_chanceSlider_valueChanged(int value);
+
 private:
     Ui::ProgramWindow *ui;
     QShortcut *_pasteShortcut;

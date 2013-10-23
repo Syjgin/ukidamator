@@ -23,38 +23,56 @@
         <source>2&amp;yukidama</source>
         <translation>Сне&amp;жифицировать</translation>
     </message>
-    <message utf8="true">
-        <location filename="programwindow.ui" line="89"/>
-        <source>ふらがな</source>
-        <translation></translation>
-    </message>
-    <message utf8="true">
-        <location filename="programwindow.ui" line="105"/>
-        <source>カタカナ</source>
-        <translation></translation>
+    <message>
+        <location filename="programwindow.ui" line="83"/>
+        <source>Kana</source>
+        <translation>Кана</translation>
     </message>
     <message>
-        <location filename="programwindow.ui" line="124"/>
+        <location filename="programwindow.ui" line="95"/>
+        <source>Hiragana</source>
+        <translation>Хирагана</translation>
+    </message>
+    <message>
+        <location filename="programwindow.ui" line="111"/>
+        <source>Katakana</source>
+        <translation>Катакана</translation>
+    </message>
+    <message>
+        <location filename="programwindow.ui" line="121"/>
+        <source>Translation</source>
+        <translation>Перевод</translation>
+    </message>
+    <message>
+        <location filename="programwindow.ui" line="127"/>
+        <source>Kiridzi</source>
+        <translation>Киридзи</translation>
+    </message>
+    <message>
+        <location filename="programwindow.ui" line="137"/>
+        <source>Romadzi</source>
+        <translation>Ромадзи</translation>
+    </message>
+    <message>
+        <location filename="programwindow.ui" line="159"/>
         <source>Possibility</source>
         <translation>Вероятность</translation>
     </message>
     <message>
-        <location filename="programwindow.ui" line="158"/>
         <source>10%</source>
-        <translation>10%</translation>
+        <translation type="obsolete">10%</translation>
     </message>
     <message>
-        <location filename="programwindow.ui" line="165"/>
         <source>100%</source>
-        <translation>100%</translation>
+        <translation type="obsolete">100%</translation>
     </message>
     <message>
-        <location filename="programwindow.ui" line="196"/>
+        <location filename="programwindow.ui" line="220"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="programwindow.ui" line="209"/>
+        <location filename="programwindow.ui" line="233"/>
         <source>&amp;Close</source>
         <translation>&amp;Закрыть</translation>
     </message>

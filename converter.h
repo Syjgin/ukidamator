@@ -14,7 +14,9 @@ public:
     {
         Nothing = 0,
         HiraganaMode = 1,
-        KatakanaMode = 2
+        KatakanaMode = 2,
+        KiridziMode = 4,
+        RomadziMode = 8
     };
 
     QString Convert(const QString source);
@@ -22,13 +24,14 @@ public:
     void SetPossibility(int possibility);
 private:
     QString ConvertPattern(QString pattern);
-    QString FindKatakanaByPattern(QString pattern);
-    QString FindHiraganaByPattern(QString pattern);
     QString ConvertTrigramm(QChar one, QChar two, QChar three, int &amount);
-    QMap <QString, QString> hiragana_replacements;
-    QMap <QString, QString> katakana_replacements;
+    QMap <QString, QString> hiragana_kiridzi;
+    QMap <QString, QString> hiragana_romadzi;
+    QMap <QString, QString> katakana_kiridzi;
+    QMap <QString, QString> katakana_romadzi;
     ConvertMode _currentConvertMode;
     int _currentPossibility;
+    QString FindSymbolInMap(const QMap <QString, QString> map, QString pattern);
 };
 
 #endif // CONVERTER_H

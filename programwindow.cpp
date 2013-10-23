@@ -79,10 +79,22 @@ void ProgramWindow::on_ukidamateButton_clicked()
             mode += Converter::KatakanaMode;
         if(mode != Converter::Nothing)
         {
+            if(ui->kiridziCheckBox->isChecked())
+                mode += Converter::KiridziMode;
+            if(ui->romadziCheckBox->isChecked())
+                mode += Converter::RomadziMode;
+        }
+        if(mode != Converter::Nothing)
+        {
             _converter->SetConvertMode((Converter::ConvertMode)mode);
             _converter->SetPossibility(possibility);
             QString result = _converter->Convert(textToChange);
             ui->textEdit->setText(result);
         }
     }
+}
+
+void ProgramWindow::on_chanceSlider_valueChanged(int value)
+{
+    ui->possibilityLabel->setText(QString("%1\%").arg(QString::number(value)));
 }
