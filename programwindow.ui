@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Ukidamator</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/pictures/images/icon-32.png</normaloff>:/pictures/images/icon-32.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="2">
@@ -60,14 +64,14 @@
       </item>
       <item>
        <widget class="QPushButton" name="ukidamateButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>30</width>
           <height>30</height>
          </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 170, 0);</string>
         </property>
         <property name="text">
          <string>2&amp;yukidama</string>
@@ -110,6 +114,9 @@
            <property name="text">
             <string>Katakana</string>
            </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -135,6 +142,9 @@
           <widget class="QCheckBox" name="romadziCheckBox">
            <property name="text">
             <string>Romadzi</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -258,6 +268,8 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -30,6 +30,8 @@ private slots:
 
     void on_chanceSlider_valueChanged(int value);
 
+    void on_textEdit_textChanged();
+
 private:
     Ui::ProgramWindow *ui;
     QShortcut *_pasteShortcut;

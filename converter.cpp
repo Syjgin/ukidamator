@@ -624,10 +624,35 @@ QString Converter::Convert(const QString source)
     int dist = source.length() - currentIndex;
     if(dist == 3)
     {
-        int unneeded = 0;
-        QString ps = ConvertTrigramm(source[currentIndex], source[currentIndex+1], source[currentIndex+2], unneeded);
-        if(ps !="")
-            result+=ps;
+        int amount = 0;
+        QString ps = ConvertTrigramm(source[currentIndex], source[currentIndex+1], source[currentIndex+2], amount);
+        if(ps != "")
+        {
+            result += ps;
+            if(amount == 1)
+            {
+                QString ps2 = ConvertPattern(source[currentIndex+2]);
+                if(ps2 != "")
+                    result+=ps2;
+                else
+                    result+=source[currentIndex+2];
+            }
+            if(amount==0)
+            {
+                QString both = source[currentIndex+1];
+                both += source[currentIndex+2];
+                QString ps2 = ConvertPattern(both);
+                if(ps2 != "")
+                    result+=ps2;
+                else
+                    result+=source[currentIndex+1];
+                QString ps3 = ConvertPattern(source[currentIndex+2]);
+                if(ps3 != "")
+                    result+=ps3;
+                else
+                    result+=source[currentIndex+2];
+            }
+        }
         else
         {
             result+=source[currentIndex];
@@ -637,27 +662,26 @@ QString Converter::Convert(const QString source)
     }
     if(dist == 2)
     {
-        QString pattern = source[currentIndex];
-        pattern +=  source[currentIndex+1];
-        QString ps = ConvertPattern(pattern);
-        if(ps !="")
+        QString both = source[currentIndex];
+        both += source[currentIndex+1];
+        QString ps = ConvertPattern(both);
+        if(ps != "")
             result+=ps;
         else
-        {
             result+=source[currentIndex];
+        QString ps2 = ConvertPattern(source[currentIndex+1]);
+        if(ps2 != "")
+            result+=ps2;
+        else
             result+=source[currentIndex+1];
-        }
     }
     if(dist == 1)
     {
-        QString pattern = source[currentIndex];
-        QString ps = ConvertPattern(pattern);
-        if(ps !="")
+        QString ps = ConvertPattern(source[currentIndex]);
+        if(ps != "")
             result+=ps;
         else
-        {
             result+=source[currentIndex];
-        }
     }
     return result;
 }
@@ -720,42 +744,29 @@ QString Converter::FindSymbolInMap(const QMap<QString, QString> map, QString pat
     return "";
 }
 
-
-
 QString Converter::ConvertPattern(QString pattern)
 {
+    QString converted;
     if((_currentConvertMode & KiridziMode) != 0)
     {
         bool rand = qrand()%2;
         if(rand)
         {
-            if((_currentConvertMode & HiraganaMode) != 0)
-            {
-                QString converted = FindSymbolInMap(hiragana_kiridzi, pattern);
-                if(!converted.isEmpty())
-                    return converted;
-            }
-            if((_currentConvertMode & KatakanaMode) != 0)
-            {
-                QString converted = FindSymbolInMap(katakana_kiridzi, pattern);
-                if(!converted.isEmpty())
-                    return converted;
-            }
+            converted = GetConvertedSymbol(HiraganaMode, hiragana_kiridzi, pattern);
+            if(!converted.isEmpty())
+                return converted;
+            converted = GetConvertedSymbol(KatakanaMode, katakana_kiridzi, pattern);
+            if(!converted.isEmpty())
+                return converted;
         }
         else
         {
-            if((_currentConvertMode & KatakanaMode) != 0)
-            {
-                QString converted = FindSymbolInMap(katakana_kiridzi, pattern);
-                if(!converted.isEmpty())
-                    return converted;
-            }
-            if((_currentConvertMode & HiraganaMode) != 0)
-            {
-                QString converted = FindSymbolInMap(hiragana_kiridzi, pattern);
-                if(!converted.isEmpty())
-                    return converted;
-            }
+            converted = GetConvertedSymbol(KatakanaMode, katakana_kiridzi, pattern);
+            if(!converted.isEmpty())
+                return converted;
+            converted = GetConvertedSymbol(HiraganaMode, hiragana_kiridzi, pattern);
+            if(!converted.isEmpty())
+                return converted;
         }
     }
     if((_currentConvertMode & RomadziMode) != 0)
@@ -766,34 +777,33 @@ QString Converter::ConvertPattern(QString pattern)
         bool rand1 = qrand()%2;
         if(rand1)
         {
-            if((_currentConvertMode & HiraganaMode) != 0)
-            {
-                QString converted = FindSymbolInMap(hiragana_romadzi, pattern);
-                if(!converted.isEmpty())
-                    return converted;
-            }
-            if((_currentConvertMode & KatakanaMode) != 0)
-            {
-                QString converted = FindSymbolInMap(katakana_romadzi, pattern);
-                if(!converted.isEmpty())
-                    return converted;
-            }
+            converted = GetConvertedSymbol(HiraganaMode, hiragana_romadzi, pattern);
+            if(!converted.isEmpty())
+                return converted;
+            converted = GetConvertedSymbol(KatakanaMode, katakana_romadzi, pattern);
+            if(!converted.isEmpty())
+                return converted;
         }
         else
         {
-            if((_currentConvertMode & KatakanaMode) != 0)
-            {
-                QString converted = FindSymbolInMap(katakana_romadzi, pattern);
-                if(!converted.isEmpty())
-                    return converted;
-            }
-            if((_currentConvertMode & HiraganaMode) != 0)
-            {
-                QString converted = FindSymbolInMap(hiragana_romadzi, pattern);
-                if(!converted.isEmpty())
-                    return converted;
-            }
+            converted = GetConvertedSymbol(KatakanaMode, katakana_romadzi, pattern);
+            if(!converted.isEmpty())
+                return converted;
+            converted = GetConvertedSymbol(HiraganaMode, hiragana_romadzi, pattern);
+            if(!converted.isEmpty())
+                return converted;
         }
+    }
+    return "";
+}
+
+QString Converter::GetConvertedSymbol(Converter::ConvertMode mode, QMap<QString, QString> map, QString pattern)
+{
+    if((_currentConvertMode & mode) != 0)
+    {
+        QString converted = FindSymbolInMap(map, pattern);
+        if(!converted.isEmpty())
+            return converted;
     }
     return "";
 }
