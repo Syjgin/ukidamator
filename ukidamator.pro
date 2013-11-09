@@ -25,7 +25,7 @@ TRANSLATIONS = ukidamator_ru_RU.ts
 
 win32: CONFIG += static
 
-OTHER_FILES +=
+RC_FILE = icon.rc
 
 RESOURCES += \
     resources.qrc
