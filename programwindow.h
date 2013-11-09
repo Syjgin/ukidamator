@@ -20,8 +20,6 @@ public:
 private slots:
     void on_closeButton_clicked();
 
-    void on_saveButton_clicked();
-
     void on_pasteButton_clicked();
 
     void on_copyButton_clicked();
@@ -31,6 +29,30 @@ private slots:
     void on_chanceSlider_valueChanged(int value);
 
     void on_textEdit_textChanged();
+
+    void on_action_Open_triggered();
+
+    void on_action_Save_triggered();
+
+    void on_action_Copy_triggered();
+
+    void on_action_Paste_triggered();
+
+    void on_action_Hiragana_triggered();
+
+    void on_action_Katakana_triggered();
+
+    void on_action_Romadzi_triggered();
+
+    void on_action_Kiridzi_triggered();
+
+    void on_action_Close_triggered();
+
+    void on_actionAbout_Qt_triggered();
+
+    void on_actionAbout_ukidamator_triggered();
+
+    void on_actionDonate_triggered();
 
 private:
     Ui::ProgramWindow *ui;

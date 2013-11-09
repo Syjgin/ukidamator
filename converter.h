@@ -31,8 +31,8 @@ private:
     QMap <QString, QString> katakana_romadzi;
     ConvertMode _currentConvertMode;
     int _currentPossibility;
-    QString FindSymbolInMap(const QMap <QString, QString> map, QString pattern);
-    QString GetConvertedSymbol(ConvertMode mode, QMap <QString, QString> map, QString pattern);
+    QString FindSymbolInMap(const QMap <QString, QString> *map, QString pattern);
+    QString GetConvertedSymbol(ConvertMode mode,const QMap<QString, QString> *map, QString pattern);
 };
 
 #endif // CONVERTER_H
