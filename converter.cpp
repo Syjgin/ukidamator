@@ -747,6 +747,9 @@ QString Converter::FindSymbolInMap(const QMap<QString, QString> *map, QString pa
 QString Converter::ConvertPattern(QString pattern)
 {
     QString converted;
+    int rand0 = qrand()%100;
+    if(rand0 >= _currentPossibility)
+        return "";
     if((_currentConvertMode & KiridziMode) != 0)
     {
         bool rand = qrand()%2;
@@ -771,9 +774,6 @@ QString Converter::ConvertPattern(QString pattern)
     }
     if((_currentConvertMode & RomadziMode) != 0)
     {
-        int rand0 = qrand()%100;
-        if(rand0 >= _currentPossibility)
-            return "";
         bool rand1 = qrand()%2;
         if(rand1)
         {
