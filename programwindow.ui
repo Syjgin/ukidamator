@@ -292,7 +292,6 @@
     </property>
     <addaction name="actionAbout_ukidamator"/>
     <addaction name="actionAbout_Qt"/>
-    <addaction name="actionDonate"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -364,11 +363,6 @@
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About &amp;Qt</string>
-   </property>
-  </action>
-  <action name="actionDonate">
-   <property name="text">
-    <string>Donate</string>
    </property>
   </action>
  </widget>

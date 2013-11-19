@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QShortcut>
+#include <QSettings>
 #include "converter.h"
 
 namespace Ui {
@@ -52,13 +53,12 @@ private slots:
 
     void on_actionAbout_ukidamator_triggered();
 
-    void on_actionDonate_triggered();
-
 private:
     Ui::ProgramWindow *ui;
     QShortcut *_pasteShortcut;
     QShortcut *_exitShortcut;
     Converter *_converter;
+    QSettings *_settings;
 };
 
 #endif // PROGRAMWINDOW_H
