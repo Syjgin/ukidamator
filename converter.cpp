@@ -77,7 +77,6 @@ Converter::Converter(QObject *parent) :
 
     hiragana_kiridzi[QString::fromUtf8("да")] = QString::fromUtf8("だ");
     hiragana_kiridzi[QString::fromUtf8("ди")] = QString::fromUtf8("ぢ");
-    hiragana_kiridzi[QString::fromUtf8("ду")] = QString::fromUtf8("づ");
     hiragana_kiridzi[QString::fromUtf8("дэ")] = QString::fromUtf8("で");
     hiragana_kiridzi[QString::fromUtf8("де")] = QString::fromUtf8("で");
     hiragana_kiridzi[QString::fromUtf8("до")] = QString::fromUtf8("ど");
@@ -376,7 +375,6 @@ Converter::Converter(QObject *parent) :
 
     katakana_kiridzi[QString::fromUtf8("да")] = QString::fromUtf8("ダ");
     katakana_kiridzi[QString::fromUtf8("ди")] = QString::fromUtf8("ヂ");
-    katakana_kiridzi[QString::fromUtf8("ду")] = QString::fromUtf8("ヅ");
     katakana_kiridzi[QString::fromUtf8("дэ")] = QString::fromUtf8("デ");
     katakana_kiridzi[QString::fromUtf8("де")] = QString::fromUtf8("デ");
     katakana_kiridzi[QString::fromUtf8("до")] = QString::fromUtf8("ド");
@@ -735,6 +733,8 @@ QString Converter::ConvertTrigramm(QChar one, QChar two, QChar three, int &amoun
 
 QString Converter::FindSymbolInMap(const QMap<QString, QString> *map, QString pattern)
 {
+    if(pattern == " ")
+        return "   ";
     QMap<QString, QString>::const_iterator i = map->constBegin();
     while (i != map->constEnd()) {
         if(i.key() == pattern)

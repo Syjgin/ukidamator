@@ -7,4 +7,7 @@
         <file>images/icon-256.png</file>
         <file>images/icon-512.png</file>
     </qresource>
+    <qresource prefix="/translations">
+        <file>ukidamator_ru_RU.qm</file>
+    </qresource>
 </RCC>

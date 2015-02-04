@@ -1,6 +1,7 @@
 #ifndef PROGRAMWINDOW_H
 #define PROGRAMWINDOW_H
 
+#include <QtWidgets/QMainWindow>
 #include <QMainWindow>
 #include <QShortcut>
 #include <QSettings>

@@ -11,14 +11,9 @@ int main(int argc, char *argv[])
     QTranslator *qtTranslator = new QTranslator(qApp);
     qtTranslator->load("qt_" + QLocale::system().name(),
     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    qApp->installTranslator(qtTranslator);
     QTranslator *appTranslator = new QTranslator(qApp);
-    appTranslator->load(QDir::currentPath() + "/ukidamator_" + QLocale::system().name());
-#ifdef Q_OS_LINUX
-    appTranslator->load("/usr/share/ukidamator/translations/ukidamator_" + QLocale::system().name());
-#endif
-    a.installTranslator(appTranslator);
-    a.installTranslator(qtTranslator);
+    appTranslator->load(":/translations/ukidamator_"+ QLocale::system().name());
+    qApp->installTranslator(appTranslator);
     ProgramWindow w;
     w.show();
     
