@@ -360,7 +360,6 @@ Converter::Converter(QObject *parent) :
     katakana_kiridzi[QString::fromUtf8("та")] = QString::fromUtf8("タ");
     katakana_kiridzi[QString::fromUtf8("ти")] = QString::fromUtf8("チ");
     katakana_kiridzi[QString::fromUtf8("чи")] = QString::fromUtf8("チ");
-    katakana_kiridzi[QString::fromUtf8("ту")] = QString::fromUtf8("ツ");
     katakana_kiridzi[QString::fromUtf8("цу")] = QString::fromUtf8("ツ");
     katakana_kiridzi[QString::fromUtf8("тэ")] = QString::fromUtf8("テ");
     katakana_kiridzi[QString::fromUtf8("те")] = QString::fromUtf8("テ");
@@ -510,7 +509,6 @@ Converter::Converter(QObject *parent) :
     katakana_romadzi[QString::fromUtf8("ta")] = QString::fromUtf8("タ");
     katakana_romadzi[QString::fromUtf8("ti")] = QString::fromUtf8("チ");
     katakana_romadzi[QString::fromUtf8("chi")] = QString::fromUtf8("チ");
-    katakana_romadzi[QString::fromUtf8("tu")] = QString::fromUtf8("ツ");
     katakana_romadzi[QString::fromUtf8("tsu")] = QString::fromUtf8("ツ");
     katakana_romadzi[QString::fromUtf8("te")] = QString::fromUtf8("テ");
     katakana_romadzi[QString::fromUtf8("to")] = QString::fromUtf8("ト");
